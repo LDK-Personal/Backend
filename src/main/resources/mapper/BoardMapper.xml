@@ -15,18 +15,18 @@
         WHERE id = #{id}
     </select>
 
-    <insert id="createBoard" parameterType="com.ldkspringbase.entity.BoardEntity">
-        INSERT INTO boards(id, user_Name, title, content, nowDay, view_Count)
-        VALUES (#{id}, #{userName}, #{title}, #{content}, #{nowDay}, #{viewCount});
+    <insert id="createBoard" parameterType="BoardEntity">
+        INSERT INTO boards(id, user_name, title, content, now_day, view_count, members_Number, member_Id, member_Password)
+        VALUES (#{id}, #{userName}, #{title}, #{content}, #{nowDay}, #{viewCount}, #{membersNumber}, #{memberId}, #{memberPassword});
     </insert>
 
-    <update id="updateBoard" parameterType="com.ldkspringbase.entity.BoardEntity">
+    <update id="updateBoard" parameterType="BoardEntity">
         UPDATE Boards
-        SET user_Name  = #{userName},
+        SET user_name  = #{userName},
             title      = #{title},
             content    = #{content},
-            nowDay     = #{nowDay},
-            view_Count = #{viewCount}
+            now_day    = #{nowDay},
+            view_count = #{viewCount}
         WHERE id = #{id}
     </update>
 
@@ -34,4 +34,15 @@
         DELETE FROM Boards
         WHERE id = #{id}
     </delete>
+
+    <insert id="registerMember" parameterType="com.ldkspringbase.entity.BoardEntity">
+        INSERT INTO boards (id, user_Name, title, content, now_Day, view_Count, members_Number, member_Id, member_Password)
+        VALUES (#{id}, #{userName}, #{title}, #{content}, #{nowDay}, #{viewCount}, #{membersNumber}, #{memberId}, #{memberPassword})
+    </insert>
+
+    <select id="getMemberByIdAndPassword" parameterType="java.util.Map" resultType="com.ldkspringbase.entity.BoardEntity">
+        SELECT * FROM boards
+        WHERE member_Id = #{id} AND member_Password = #{password}
+    </select>
+
 </mapper>

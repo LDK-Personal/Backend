@@ -11,3 +11,4 @@ public class LdkSpringBaseApplication {
 		SpringApplication.run(LdkSpringBaseApplication.class, args);
 	}
 }
+

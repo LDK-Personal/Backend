@@ -63,4 +63,12 @@ public class BoardService {
             throw new RuntimeException("보드 삭제에 실패하였습니다.", e);
         }
     }
+
+    public void registerMember(BoardEntity member) {
+        boardMapper.registerMember(member);
+    }
+
+    public BoardEntity getMemberByIdAndPassword(String id, String password) {
+        return boardMapper.getMemberByIdAndPassword(id, password);
+    }
 }

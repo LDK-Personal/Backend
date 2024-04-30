@@ -2,7 +2,6 @@ package com.ldkspringbase.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -11,6 +10,9 @@ public class BoardEntity {
     String userName;
     String title;
     String content;
-    LocalDate nowDay;
+    String nowDay;
     int viewCount;
+    int membersNumber;
+    String memberId;
+    String memberPassword;
 }

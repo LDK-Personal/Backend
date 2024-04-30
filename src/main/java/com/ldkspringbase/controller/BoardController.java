@@ -1,6 +1,7 @@
 package com.ldkspringbase.controller;
 
 import com.ldkspringbase.entity.BoardEntity;
+// import com.ldkspringbase.mapper.BoardMapper;
 import com.ldkspringbase.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,7 @@ public class BoardController {
     // 글 등록
     @PostMapping
     public BoardEntity createBoard(@RequestBody BoardEntity board) {
-        return boardService.createBoard(board); // Return the created board
+        return boardService.createBoard(board);
     }
 
     @PutMapping("/{id}")
@@ -43,6 +44,7 @@ public class BoardController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Board not found with id: " + id);
         }
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteBoard(@PathVariable int id) {
         boolean isDeleted = boardService.deleteBoard(id);
@@ -53,4 +55,21 @@ public class BoardController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Board not found with id: " + id);
         }
     }
+
+    @PostMapping("/register")
+    public String registerMember(@RequestBody BoardEntity member) {
+        boardService.registerMember(member);
+        return "Member registered successfully.";
+    }
+
+    @PostMapping("/login")
+    public String loginMember(@RequestBody BoardEntity member) {
+        BoardEntity foundMember = boardService.getMemberByIdAndPassword(member.getMemberId(), member.getMemberPassword());
+        if (foundMember != null) {
+            return "Login successful.";
+        } else {
+            return "Invalid credentials. Please try again.";
+        }
+    }
+
 }
