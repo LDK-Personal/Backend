@@ -10,16 +10,24 @@ import org.apache.commons.exec.PumpStreamHandler;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 
-@Service
+//@Service
 public class Emotion {
+    public static void main(String[] args) {
+        executeEmotions(null);
+    }
 
-    public MultipartFile executeEmotions(MultipartFile multipartFile) {
-        System.out.println("tracking");
-        String root = "src/main/java/com/ldkspringbase/ai";
+    public static MultipartFile executeEmotions(MultipartFile multipartFile) {
+        System.out.println("face predict");
+        String root = "C:/Users/Osstem/Desktop/LDK-SpringBase-C-R-U-D/src/main/java/com/ldkspringbase/ai/python/";
 
-        String[] command = new String[2];
-        command[0] = "python3";
-        command[1] = root + "motions.py";
+        String[] command = new String[7];
+        command[0] = "conda";
+        command[1] = "activate";
+        command[2] = "myenv";
+        command[3] = "&&";
+        command[4] = "python";
+        command[5] = root + "prediction_face.py";
+        command[6] = root + "dog.jpg";
 
         CommandLine commandLine = CommandLine.parse(command[0]);
         for (int i = 1, n = command.length; i < n; i++) {
@@ -35,17 +43,15 @@ public class Emotion {
         try {
             int result = executor.execute(commandLine);
             System.out.println("result: " + result);
-            /* System.out.println("output: " + outputStream); */
 
-            String[] word = new String(outputStream.toByteArray(), StandardCharsets.UTF_8).split("\n");
+            /*String[] word = new String(outputStream.toByteArray(), StandardCharsets.UTF_8).split("\n");
             if (word[2].equals("MJ\r")) {
                 int styleNum = (int) (Math.random() * 21 + 1);
                 System.out.println("---SUCCESS--- Detectived HandTracking");
 
-            }
+            }*/
         } catch (Exception e) {
-            // 실패 시 예외 처리
-            throw new RuntimeException("보드 생성에 실패하였습니다.", e);
+            throw new RuntimeException("Failed Face Prediction", e);
         }
         return null;
     }
