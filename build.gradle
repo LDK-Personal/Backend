@@ -37,7 +37,4 @@ tasks.named('test') {
 
 bootJar {
     mainClass = 'com.ldkspringbase.LdkSpringBaseApplication'
-    manifest {
-        attributes 'Main-Class': 'com.ldkspringbase.LdkSpringBaseApplication'
-    }
 }

@@ -17,8 +17,8 @@ picSize = 200
 rotation = True
 
 # Paths to face and landmark detectors
-pathDet = 'dogHeadDetector.dat'
-pathPred = 'landmarkDetector.dat'
+pathDet = 'python/dogHeadDetector.dat'
+pathPred = 'python/landmarkDetector.dat'
 
 # Initialize face and landmark detectors
 detector = dlib.cnn_face_detection_model_v1(pathDet)
@@ -28,7 +28,7 @@ predictor = dlib.shape_predictor(pathPred)
 helper = No_Preprocessing(img_width, img_height)
 
 # Load the model
-model = load_model('saveclassifier.keras')
+model = load_model('python/saveclassifier.keras')
 
 
 def process_image(file_path):

@@ -13,28 +13,19 @@ import java.io.File;
 
 @Service
 public class PredictionFace {
-    final String PROJECT_PATH;
-    final String ROOT_PATH;
-    final String IMG_FOLDER_PATH = "/imgs";
-    final String RESULT_FOLDER_PATH = "/result";
-    final String JPG = ".JPG";
-    final String TEXT = ".TXT";
+    final String HOME_PATH = "/home/ubuntu/ty";
+    final String PYTHON_PATH = HOME_PATH + "/python";
+    final String IMG_FOLDER_PATH = HOME_PATH + "/imgs";
+    final String RESULT_FOLDER_PATH = HOME_PATH + "/result";
+    final String JPG = ".jpg";
+    final String TEXT = ".txt";
 
     int INDEX = 1;
-
-    private String getProjectPath() {
-        return System.getProperty("user.dir");
-    }
-
-    public PredictionFace() {
-        PROJECT_PATH = getProjectPath();
-        ROOT_PATH = PROJECT_PATH + "/src/main/java/com/ldkspringbase/ai/python";
-    }
 
     public PredictionDTO executeEmotions(MultipartFile multipartFile) {
         String originalFilename = getOriginalFilename(multipartFile);
 
-        saveFile(multipartFile, ROOT_PATH + IMG_FOLDER_PATH, originalFilename + JPG);
+        saveFile(multipartFile, IMG_FOLDER_PATH, originalFilename + JPG);
 
         CommandLine commandLine = getCommandLine(originalFilename + JPG);
 
@@ -77,8 +68,8 @@ public class PredictionFace {
     private CommandLine getCommandLine(String originalFilename) {
         String[] command = new String[3];
         command[0] = "python3";
-        command[1] = ROOT_PATH + "prediction_face.py";
-        command[2] = ROOT_PATH + IMG_FOLDER_PATH + originalFilename;
+        command[1] = PYTHON_PATH + "/prediction_face.py";
+        command[2] = IMG_FOLDER_PATH + originalFilename;
 
         CommandLine commandLine = CommandLine.parse(command[0]);
         for (int i = 1, n = command.length; i < n; i++) {
@@ -94,7 +85,7 @@ public class PredictionFace {
 
     private PredictionDTO getJsonToDTO(String originalFilename) {
         try {
-            File file = new File(ROOT_PATH + RESULT_FOLDER_PATH + originalFilename);
+            File file = new File(RESULT_FOLDER_PATH + originalFilename);
             ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.readValue(file, PredictionDTO.class);
         } catch (Exception e) {
