@@ -48,7 +48,7 @@ public class PredictionFace {
             throw new RuntimeException("Failed Face Prediction", e);
         }
 
-        PredictionDTO predictionDTO = getJsonToDTO("/1_anger001" + TEXT);
+        PredictionDTO predictionDTO = getJsonToDTO(originalFilename + TEXT);
         System.out.println(predictionDTO);
         return predictionDTO;
     }
