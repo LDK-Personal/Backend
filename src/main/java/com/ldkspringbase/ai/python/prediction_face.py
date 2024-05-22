@@ -30,6 +30,7 @@ helper = No_Preprocessing(img_width, img_height)
 # Load the model
 model = load_model('saveclassifier.keras')
 
+
 def process_image(file_path):
     # Read image from path
     orig = cv2.imread(file_path)
@@ -53,7 +54,7 @@ def process_image(file_path):
         if len(dets) == 0:
             print(f"No faces detected in the image {file_path}")
             return None
-            
+
         for i, d in enumerate(dets):
             # Save coordinates
             x1 = max(int(d.rect.left() / ratio), 1)
@@ -68,7 +69,7 @@ def process_image(file_path):
                 x = int(round(x / ratio))
                 y = int(round(y / ratio))
                 # right eye, nose, left eye
-                if index in [2, 3, 5]:  
+                if index in [2, 3, 5]:
                     points.append([x, y])
             points = np.array(points)
 
@@ -90,10 +91,10 @@ def process_image(file_path):
             # Predict emotion
             df = helper.predict_emotion(model, x)
             df = df.sort_values(by='prob', ascending=False)
-            
+
             print("Prediction DataFrame:")
             print(df)
-            
+
             emotion = df['emotion'].values[0]
             prob = str(round((df['prob'].values[0]) * 100, 2))
 
@@ -104,8 +105,12 @@ def process_image(file_path):
             }
 
             # Save result to JSON file
-            result_file_name = os.path.splitext(os.path.basename(file_path))[0] + '_result.json'
-            result_file_path = os.path.join(os.path.dirname(file_path), result_file_name)
+            result_file_name = os.path.splitext(os.path.basename(file_path))[0] + '.txt'
+            result_file_path = os.path.join("result", result_file_name)
+
+            if not os.path.exists(os.path.dirname(result_file_path)):
+                os.makedirs(os.path.dirname(result_file_path))
+
             with open(result_file_path, 'w') as result_file:
                 json.dump(result, result_file, indent=4)
 
@@ -115,6 +120,7 @@ def process_image(file_path):
 
             return result
 
+
 def main():
     parser = argparse.ArgumentParser(description='Process an image.')
     parser.add_argument('image_path', type=str, help='Path to the image file.')
@@ -123,6 +129,7 @@ def main():
     result = process_image(args.image_path)
     if result:
         print("Analysis result saved and displayed above.")
+
 
 if __name__ == '__main__':
     main()

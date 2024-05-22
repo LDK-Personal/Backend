@@ -5,7 +5,7 @@ import operator
 from functools import reduce
 import numpy as np
 import pandas as pd
-import face_recognition
+# import face_recognition
 import warnings
 import matplotlib.pyplot as plt
 
