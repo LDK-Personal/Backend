@@ -25,6 +25,7 @@ dependencies {
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'mysql:mysql-connector-java:8.0.33'
+    implementation files('src/main/resources/commons-exec-1.4.0.jar')
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
     compileOnly 'org.projectlombok:lombok'
@@ -32,4 +33,11 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+bootJar {
+    mainClass = 'com.ldkspringbase.LdkSpringBaseApplication'
+    manifest {
+        attributes 'Main-Class': 'com.ldkspringbase.LdkSpringBaseApplication'
+    }
 }
