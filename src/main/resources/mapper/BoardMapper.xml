@@ -10,19 +10,19 @@
     </select>
 
     <select id="getBoardById" parameterType="int" resultType="com.ldkspringbase.dto.BoardDto">
-        SELECT  user_id, title, content, view_count
+        SELECT  user_id, title, content
         FROM    boards
         WHERE   id = #{id}
     </select>
 
     <insert id="createBoard" parameterType="com.ldkspringbase.dto.BoardDto">
-        INSERT INTO boards (user_id, title, content, view_count)
-        VALUES  (#{userId}, #{title}, #{content}, #{viewCount})
+        INSERT INTO boards (user_id, title, content)
+        VALUES  (#{userId}, #{title}, #{content})
     </insert>
 
     <update id="updateBoard" parameterType="map">
         UPDATE  boards
-        SET     title = #{boardDto.title}, content = #{boardDto.content}, view_count = #{boardDto.viewCount}
+        SET     title = #{boardDto.title}, content = #{boardDto.content}
         WHERE   id = #{id}
     </update>
 
@@ -33,8 +33,8 @@
     </delete>
 
     <insert id="registerMember" parameterType="com.ldkspringbase.entity.BoardEntity">
-        INSERT INTO boards (user_id, title, content, view_count)
-        VALUES  (#{userId}, #{title}, #{content}, #{viewCount})
+        INSERT INTO boards (user_id, title, content)
+        VALUES  (#{userId}, #{title}, #{content}})
     </insert>
 
     <select id="getMemberByIdAndPassword" parameterType="java.lang.String" resultType="com.ldkspringbase.dto.BoardDto">
