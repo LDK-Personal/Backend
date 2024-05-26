@@ -1,75 +1,53 @@
 package com.ldkspringbase.controller;
 
-import com.ldkspringbase.entity.BoardEntity;
-// import com.ldkspringbase.mapper.BoardMapper;
-import com.ldkspringbase.service.BoardService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.ldkspringbase.dto.BoardDto;
+import com.ldkspringbase.entity.BoardEntity;
+import com.ldkspringbase.service.BoardService;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/boards")
 @RequiredArgsConstructor
 public class BoardController {
-    private final BoardService boardService;
 
-    // 전체 목록 조회
-    @GetMapping("/all")
-    public List<BoardEntity> getAllBoards() {
-        return boardService.getAllBoards();
-    }
+	private final BoardService boardService;
 
-    // 글 하나 조회
-    @GetMapping("/{id}")
-    public BoardEntity getBoardById(@PathVariable int id) {
-        return boardService.getBoardById(id);
-    }
+	@GetMapping("/all")
+	public ResponseEntity<List<BoardEntity>> getAllBoards() {
+		return ResponseEntity.ok(boardService.getAllBoards());
+	}
 
-    // 글 등록
-    @PostMapping
-    public BoardEntity createBoard(@RequestBody BoardEntity board) {
-        return boardService.createBoard(board);
-    }
+	@GetMapping("/{id}")
+	public ResponseEntity<BoardDto> getBoardById(@PathVariable int id) {
+		return ResponseEntity.ok(boardService.getBoardById(id));
+	}
 
-    @PutMapping("/{id}")
-    public ResponseEntity<String> updateBoard(@PathVariable int id, @RequestBody BoardEntity board) {
-        boolean isUpdated = boardService.updateBoard(id, board);
+	@PostMapping("")
+	public ResponseEntity<Boolean> createBoard(@RequestBody BoardDto boardDto) {
+		return ResponseEntity.ok(boardService.createBoard(boardDto));
+	}
 
-        if (isUpdated) {
-            return ResponseEntity.ok("Board updated successfully");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Board not found with id: " + id);
-        }
-    }
+	@PutMapping("/{id}")
+	public ResponseEntity<Boolean> updateBoard(@PathVariable int id, @RequestBody BoardDto boardDto) {
+		return ResponseEntity.ok(boardService.updateBoard(id, boardDto));
+	}
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteBoard(@PathVariable int id) {
-        boolean isDeleted = boardService.deleteBoard(id);
-
-        if (isDeleted) {
-            return ResponseEntity.ok("Board deleted successfully");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Board not found with id: " + id);
-        }
-    }
-
-    @PostMapping("/register")
-    public String registerMember(@RequestBody BoardEntity member) {
-        boardService.registerMember(member);
-        return "Member registered successfully.";
-    }
-
-    @PostMapping("/login")
-    public String loginMember(@RequestBody BoardEntity member) {
-        BoardEntity foundMember = boardService.getMemberByIdAndPassword(member.getMemberId(), member.getMemberPassword());
-        if (foundMember != null) {
-            return "Login successful.";
-        } else {
-            return "Invalid credentials. Please try again.";
-        }
-    }
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Boolean> deleteBoard(@PathVariable int id) {
+		return ResponseEntity.ok(boardService.deleteBoard(id));
+	}
 
 }

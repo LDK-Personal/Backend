@@ -1,15 +1,16 @@
 package com.ldkspringbase.ai;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ldkspringbase.entity.PredictionDTO;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.PumpStreamHandler;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ldkspringbase.entity.PredictionDTO;
 
 @Service
 public class PredictionFace {

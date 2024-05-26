@@ -8,7 +8,7 @@ group = 'com'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    sourceCompatibility = '11'
+    sourceCompatibility = "11"
 }
 
 configurations {
@@ -29,6 +29,8 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
     compileOnly 'org.projectlombok:lombok'
+
+    implementation group: 'org.bgee.log4jdbc-log4j2', name:'log4jdbc-log4j2-jdbc4.1', version: '1.16'
 }
 
 tasks.named('test') {

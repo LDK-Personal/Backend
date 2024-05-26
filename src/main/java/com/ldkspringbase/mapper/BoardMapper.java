@@ -1,19 +1,18 @@
 package com.ldkspringbase.mapper;
 
-import com.ldkspringbase.entity.BoardEntity;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
+import com.ldkspringbase.dto.BoardDto;
+import com.ldkspringbase.entity.BoardEntity;
 
 @Mapper
 public interface BoardMapper {
 	List<BoardEntity> getAllBoards();
-	BoardEntity getBoardById(int id);
-	void createBoard(BoardEntity board);
-	void updateBoard(BoardEntity board);
-	void deleteBoard(int id);
-
-	void registerMember(BoardEntity member);
-	BoardEntity getMemberByIdAndPassword(@Param("id") String id, @Param("password") String password);
+	BoardDto getBoardById(int id);
+	boolean createBoard(BoardDto boardDto);
+	boolean updateBoard(@Param("id") int id, @Param("boardDto")BoardDto boardDto);
+	boolean deleteBoard(int id);
 }
