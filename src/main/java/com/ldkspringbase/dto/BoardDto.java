@@ -13,13 +13,11 @@ public class BoardDto {
 	String userId;
 	String title;
 	String content;
-	int viewCount;
 
 	@Builder
 	public BoardDto(String userId, String title, String content, int viewCount) {
 		this.userId = userId;
 		this.title = title;
 		this.content = content;
-		this.viewCount = viewCount;
 	}
 }

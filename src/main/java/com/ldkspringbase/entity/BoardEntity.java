@@ -8,5 +8,4 @@ public class BoardEntity {
     String userId;
     String title;
     String content;
-    int viewCount;
 }

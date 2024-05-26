@@ -49,5 +49,4 @@ public class BoardController {
 	public ResponseEntity<Boolean> deleteBoard(@PathVariable int id) {
 		return ResponseEntity.ok(boardService.deleteBoard(id));
 	}
-
 }
